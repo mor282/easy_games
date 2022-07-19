@@ -5,6 +5,8 @@ let score = document.querySelector('#score')
 
 let result = 0
 let currentTime = timeLeft.textContent
+var restart = document.getElementById('restart')
+restart.addEventListener('click', restartBoard)
 
 //removing the old mole and put a new one instead
 function randomSquare(){
@@ -43,6 +45,15 @@ function countdown(){
         clearInterval(timerId)
         alert("GAME OVER! Your final score is "+ result)
     }
+}
+
+function restartBoard(){
+    currentTime = 20
+    timeLeft.textContent = currentTime
+    score.textContent = 0
+    result = 0
+    clearInterval(timerId)
+    timerId = setInterval(countdown, 1000)
 }
 
 let timerId = setInterval(countdown, 1000)
