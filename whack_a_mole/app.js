@@ -1,3 +1,6 @@
+//problems:
+//can get point even after the game ended
+
 const square = document.querySelectorAll('.square')
 const mole = document.querySelectorAll('.mole')
 const timeLeft = document.querySelector('#time-left')
@@ -5,8 +8,17 @@ let score = document.querySelector('#score')
 
 let result = 0
 let currentTime = timeLeft.textContent
-var restart = document.getElementById('restart')
-restart.addEventListener('click', restartBoard)
+
+let easyOn = 0
+let hardOn = 0
+let mediumOn = 0
+
+var easy = document.getElementById('easy')
+easy.addEventListener('click', easyMode)
+var medium = document.getElementById('medium')
+medium.addEventListener('click', mediumMode)
+var hard = document.getElementById('hard')
+hard.addEventListener('click', hardMode)
 
 //removing the old mole and put a new one instead
 function randomSquare(){
@@ -33,9 +45,16 @@ if (timeLeft.textContent > 0){
 }
 
 function moveMole(){
-    let timerId = null
     //moving the mole every 1000 ms
-    timerId = setInterval(randomSquare, 350)
+    if (easyOn > 0){
+        timerId2 = setInterval(randomSquare, 500)
+    }
+    else if (mediumOn > 0){
+        timerId2 = setInterval(randomSquare, 300)
+    }
+    else {
+        timerId2 = setInterval(randomSquare, 150)
+    }
 }
 
 function countdown(){
@@ -47,14 +66,37 @@ function countdown(){
     }
 }
 
-function restartBoard(){
+function easyMode(){
+    easyOn = 1
+    hardOn = 0
+    mediumOn = 0
+    start()
+}
+
+function mediumMode(){
+    easyOn = 0
+    hardOn = 0
+    mediumOn = 1
+    start()
+}
+
+function hardMode(){
+    easyOn = 0
+    hardOn = 1
+    mediumOn = 0
+    start()
+}
+
+function start(){
     currentTime = 20
     timeLeft.textContent = currentTime
     score.textContent = 0
     result = 0
     clearInterval(timerId)
+    clearInterval(timerId2)
+    moveMole()
     timerId = setInterval(countdown, 1000)
 }
 
-let timerId = setInterval(countdown, 1000)
-moveMole()
+let timerId = null
+let timerId2 = null
