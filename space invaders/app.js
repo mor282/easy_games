@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded',() => {
     const grid = document.querySelector('.grid')
     const resultsDisplay = document.querySelector('.results')
     let width = 15
+    let height = 15
     let currentShooterIndex = 202
     let results = 0
     let aliensRemoved = []
@@ -51,6 +52,14 @@ document.addEventListener('DOMContentLoaded',() => {
             case 'ArrowRight':
                 if (currentShooterIndex % width < width -1)
                     currentShooterIndex += 1
+                break
+            case 'ArrowUp':
+                if (currentShooterIndex - width >= 0)
+                    currentShooterIndex -= width
+                break
+            case 'ArrowDown':
+                if (currentShooterIndex + width < height * width - 1)
+                    currentShooterIndex += width
                 break
         }
         squares[currentShooterIndex].classList.add('shooter')
@@ -130,8 +139,8 @@ document.addEventListener('DOMContentLoaded',() => {
                 console.log(aliensRemoved)     
             }
         }
-        switch(e.key){
-            case 'ArrowUp':
+        switch(e.code){
+            case 'Space':
                 laserId = setInterval(moveLaser, 100)
         }
     }
