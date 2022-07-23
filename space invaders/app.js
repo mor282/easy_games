@@ -147,3 +147,10 @@ document.addEventListener('DOMContentLoaded',() => {
 
     document.addEventListener('keydown', shoot)
 })
+
+var restart = document.getElementById('restart')
+restart.addEventListener('click',reload)
+
+function reload(){
+    location.reload()
+}
