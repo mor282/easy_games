@@ -76,37 +76,43 @@ document.addEventListener('DOMContentLoaded', () => {
         [13, 20, 27, 34],
       ]
 
-    for (let i = 0; i < squares.length; i++) (
-        //add an onclick for each square
-        function(index){
-            squares[i].onclick = function(){
-                while(gameOn){
-                    //the current place is taken
-                    if (squares[index].classList.contains('taken')){
-                        index = index - 7
-                    }
-                    //the place below is taken but the current place is empty
-                    else if (squares[index+7].classList.contains('taken')){
-                        squares[index].classList.add('taken')
-                        if (currentPlayer == 1){
-                            squares[index].classList.add('player-one')
-                            currentPlayer = 2
+    var restart = document.getElementById('restart')
+    restart.addEventListener('click', restartBoard)
+
+    function startGame(){
+        for (let j = 0; j < squares.length; j++) (
+            //add an onclick for each square
+            function(index){
+                squares[j].onclick = function(){
+                    while(gameOn){
+                        //the current place is taken
+                        if (squares[index].classList.contains('taken')){
+                            index = index - 7
+                        }
+                        //the place below is taken but the current place is empty
+                        else if (squares[index+7].classList.contains('taken')){
+                            squares[index].classList.add('taken')
+                            if (currentPlayer == 1){
+                                squares[index].classList.add('player-one')
+                                currentPlayer = 2
+                            }
+                            else{
+                                squares[index].classList.add('player-two')
+                                currentPlayer = 1
+                            }
+                            displayCurrentPlayer.innerHTML = currentPlayer
+                            break
                         }
                         else{
-                            squares[index].classList.add('player-two')
-                            currentPlayer = 1
+                            //the place below is empty
+                            index = index + 7
                         }
-                        displayCurrentPlayer.innerHTML = currentPlayer
-                        break
-                    }
-                    else{
-                        //the place below is empty
-                        index = index + 7
                     }
                 }
-            }
-        }   
-    )(i)
+            }   
+        )(j)
+    }
+    startGame()
 
     //check for win
     function checkBoard(){
@@ -133,6 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         gameOn = false
                     }
         }
+    }
+
+    function restartBoard(){
+        location.reload()
     }
 
     squares.forEach(square => square.addEventListener('click', checkBoard))

@@ -1,3 +1,6 @@
+//problems:
+//game start immidietly as opening the page BUT it has an option to restart
+
 document.addEventListener('DOMContentLoaded',() => {
     const grid = document.querySelector('.grid')
     const resultsDisplay = document.querySelector('.results')
